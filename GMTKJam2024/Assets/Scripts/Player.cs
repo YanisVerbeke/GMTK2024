@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
     //private AudioSource _audioSource;
+    private Animator _animator;
 
     private float _xInput;
     private float _jumpForce = 15f;
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         //_audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour
         //_audioSource.PlayOneShot(_audioSource.clip);
         _rigidbody.velocity = Vector2.zero;
         _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        _animator.SetTrigger("OnFlap");
     }
 
     private void Grow()
@@ -66,6 +69,10 @@ public class Player : MonoBehaviour
         _rigidbody.mass += 0.1f;
         _jumpForce++;
         _size++;
+        if (_size >= 5)
+        {
+            _animator.SetTrigger("OnMid");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -75,6 +82,15 @@ public class Player : MonoBehaviour
             collision.transform.GetComponent<Obstacle>().Collide(_size);
 
             //    GameManager.Instance.GameOver();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.GetComponent<Fruit>() != null)
+        {
+            Grow();
+            Destroy(collision.gameObject);
         }
     }
 }
