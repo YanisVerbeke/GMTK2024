@@ -85,6 +85,7 @@ public class Player : MonoBehaviour
         if (_size % 5 == 0)
         {
             _animator.SetTrigger("OnMid");
+            Camera.main.gameObject.GetComponent<CameraShake>().StartShake();
         }
     }
 
@@ -92,6 +93,7 @@ public class Player : MonoBehaviour
     {
         _cameraZoom.ZoomOut(5);
         _obstaclesDestroyed = 0;
+        Camera.main.gameObject.GetComponent<CameraShake>().StopShake();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
