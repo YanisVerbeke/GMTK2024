@@ -32,7 +32,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void SpawnObstacle()
     {
-        float yPos = Random.Range(-1.6f, 1.6f);
+        float yPos = Random.Range(-1.2f, 1.6f);
 
         Instantiate(_obstaclePrefabs[Random.Range(0, _obstaclePrefabs.Count)], new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z), Quaternion.identity);
     }

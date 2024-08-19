@@ -178,8 +178,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5199172862123118230}
   - component: {fileID: 5199172862123118229}
-  - component: {fileID: 5199172862123118228}
   - component: {fileID: 7972823603966581004}
+  - component: {fileID: 2003672451}
   m_Layer: 8
   m_Name: Obstacle 1
   m_TagString: Untagged
@@ -217,8 +217,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sizeToDestroy: 5
---- !u!61 &5199172862123118228
-BoxCollider2D:
+--- !u!50 &7972823603966581004
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5199172862123118227}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 5
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &2003672451
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -240,27 +261,10 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5}
-  m_EdgeRadius: 0
---- !u!50 &7972823603966581004
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5199172862123118227}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.023490593, y: 0.78858614}
+      - {x: -0.75138825, y: 0.41472375}
+      - {x: -0.6230209, y: -0.7385458}
+      - {x: 0.6347662, y: -0.7502909}
+      - {x: 0.76313305, y: 0.42646933}

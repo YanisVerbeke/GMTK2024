@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &312372134
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -352,6 +353,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e61eafbb3ea06b47a580439e12efed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,7 +493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1040765371
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -606,6 +619,8 @@ MonoBehaviour:
   _obstaclePrefabs:
   - {fileID: 5199172862123118227, guid: ea2f5ab283533cc41bceedd4feb00571, type: 3}
   - {fileID: 5199172862123118227, guid: 670fc5f623d4ba543a9940a77160aac5, type: 3}
+  - {fileID: 5199172862123118227, guid: 527d1943e11f9534d864a96637801f97, type: 3}
+  - {fileID: 5199172862123118227, guid: 603d2b0e24e0c7145844e450af96aff4, type: 3}
   _fruitPrefab: {fileID: 3299464482189386906, guid: 47b275380a5ae2849bc28cb6299b4c64, type: 3}
 --- !u!4 &1440127748
 Transform:
@@ -654,6 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311f6d4fe902e3940bf9c3c1eefff140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _size: 1
 --- !u!4 &1653167522
 Transform:
   m_ObjectHideFlags: 0
@@ -745,7 +761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1741951282
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -989,7 +1005,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5199172862123118227, guid: ea2f5ab283533cc41bceedd4feb00571, type: 3}
       propertyPath: m_Name
-      value: Obstacle
+      value: Caillou1
       objectReference: {fileID: 0}
     - target: {fileID: 5199172862123118230, guid: ea2f5ab283533cc41bceedd4feb00571, type: 3}
       propertyPath: m_RootOrder
@@ -1001,7 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5199172862123118230, guid: ea2f5ab283533cc41bceedd4feb00571, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5199172862123118230, guid: ea2f5ab283533cc41bceedd4feb00571, type: 3}
       propertyPath: m_LocalPosition.z

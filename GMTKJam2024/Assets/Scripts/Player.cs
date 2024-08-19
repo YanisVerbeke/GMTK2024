@@ -10,7 +10,12 @@ public class Player : MonoBehaviour
 
     private float _xInput;
     private float _jumpForce = 15f;
-    private int _size = 1;
+    [SerializeField] private int _size = 1;
+
+    private int _obstaclesDestroyed = 0;
+
+    private Vector2 _screenBounds;
+    private CameraZoom _cameraZoom;
 
     private void Awake()
     {
@@ -21,6 +26,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        _cameraZoom = Camera.main.gameObject.GetComponent<CameraZoom>();
         Jump();
     }
 
@@ -33,7 +39,7 @@ public class Player : MonoBehaviour
 
         _xInput = Input.GetAxis("Horizontal");
 
-        if (transform.position.y < -10)
+        if (transform.position.y <= _screenBounds.y * -1 - 5)
         {
             //GameManager.Instance.GameOver();
             Destroy(gameObject);
@@ -48,9 +54,16 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         _rigidbody.velocity = new Vector2(_xInput * 8f, _rigidbody.velocity.y);
-
-
         transform.rotation = Quaternion.Euler(0, 0, _rigidbody.velocity.y);
+    }
+
+    private void LateUpdate()
+    {
+        _screenBounds = _cameraZoom.Screenbounds;
+        Vector3 viewPos = transform.position;
+        viewPos.x = Mathf.Clamp(viewPos.x, _screenBounds.x * -1, _screenBounds.x);
+        viewPos.y = Mathf.Clamp(viewPos.y, _screenBounds.y * -1 * 2, _screenBounds.y);
+        transform.position = viewPos;
     }
 
     private void Jump()
@@ -69,17 +82,30 @@ public class Player : MonoBehaviour
         _rigidbody.mass += 0.1f;
         _jumpForce++;
         _size++;
-        if (_size >= 5)
+        if (_size % 5 == 0)
         {
             _animator.SetTrigger("OnMid");
         }
+    }
+
+    private void GoToNextState()
+    {
+        _cameraZoom.ZoomOut(5);
+        _obstaclesDestroyed = 0;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.GetComponent<Obstacle>() != null)
         {
-            collision.transform.GetComponent<Obstacle>().Collide(_size);
+            if (collision.transform.GetComponent<Obstacle>().IsDestroyedByCollision(_size))
+            {
+                _obstaclesDestroyed++;
+                if (_obstaclesDestroyed >= 5)
+                {
+                    GoToNextState();
+                }
+            }
 
             //    GameManager.Instance.GameOver();
         }

@@ -7,7 +7,7 @@ public class Fruit : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector2.left * 8f * Time.deltaTime);
+        transform.Translate(Vector2.left * 7f * Time.deltaTime);
 
         if (transform.position.x < -20f)
         {

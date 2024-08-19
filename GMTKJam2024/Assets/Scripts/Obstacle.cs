@@ -6,12 +6,18 @@ public class Obstacle : MonoBehaviour
 {
     [SerializeField] private int _sizeToDestroy;
     private Rigidbody2D _rigidbody;
-    private BoxCollider2D _collider;
+    private PolygonCollider2D _collider;
+    private CameraZoom _cameraZoom;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<BoxCollider2D>();
+        _collider = GetComponent<PolygonCollider2D>();
+    }
+
+    private void Start()
+    {
+        _cameraZoom = Camera.main.gameObject.GetComponent<CameraZoom>();
     }
 
     private void Update()
@@ -32,17 +38,22 @@ public class Obstacle : MonoBehaviour
     {
         transform.Translate(Vector2.left * 8f * Time.deltaTime);
 
-        if (transform.position.x < -20f)
+        if (transform.position.y <= _cameraZoom.Screenbounds.y * -1 - 5 || transform.position.x <= _cameraZoom.Screenbounds.x * -1 - 5)
         {
             Destroy(gameObject);
         }
     }
 
-    public void Collide(int playerSize)
+    public bool IsDestroyedByCollision(int playerSize)
     {
         if (playerSize >= _sizeToDestroy)
         {
             _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
