@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    [SerializeField] private int _sizeToDestroy;
-    private Rigidbody2D _rigidbody;
-    private PolygonCollider2D _collider;
-    private CameraZoom _cameraZoom;
+    private int _sizeToDestroy;
+    protected new Rigidbody2D rigidbody;
+    protected new PolygonCollider2D collider;
+    protected CameraZoom cameraZoom;
+    private float _moveSpeed = 6f;
+    protected bool isDestroyed = false;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<PolygonCollider2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<PolygonCollider2D>();
     }
 
     private void Start()
     {
-        _cameraZoom = Camera.main.gameObject.GetComponent<CameraZoom>();
+        cameraZoom = Camera.main.gameObject.GetComponent<CameraZoom>();
+        _sizeToDestroy = GameManager.Instance.CurrentStateStats.sizeToNextState;
     }
 
     private void Update()
@@ -27,18 +30,21 @@ public class Obstacle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Mathf.Abs(_rigidbody.velocity.y) > 3f)
+        if (Mathf.Abs(rigidbody.velocity.y) > 3f && isDestroyed)
         {
-            _collider.isTrigger = true;
+            collider.isTrigger = true;
         }
     }
 
 
     protected virtual void Move()
     {
-        transform.Translate(Vector2.left * 8f * Time.deltaTime);
+        if (!GameManager.Instance.IsPlaying)
+            return;
 
-        if (transform.position.y <= _cameraZoom.Screenbounds.y * -1 - 5 || transform.position.x <= _cameraZoom.Screenbounds.x * -1 - 5)
+        transform.Translate(Vector2.left * _moveSpeed * GameManager.Instance.CurrentStateIndex * Time.deltaTime);
+
+        if (transform.position.y <= cameraZoom.Screenbounds.y * -1 - 5 || transform.position.x <= cameraZoom.Screenbounds.x * -1 - 5)
         {
             Destroy(gameObject);
         }
@@ -48,7 +54,8 @@ public class Obstacle : MonoBehaviour
     {
         if (playerSize >= _sizeToDestroy)
         {
-            _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            isDestroyed = true;
+            rigidbody.bodyType = RigidbodyType2D.Dynamic;
             return true;
         }
         else

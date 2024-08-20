@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
+    public static ObstacleSpawner Instance { get; private set; }
+
     [SerializeField] private List<GameObject> _obstaclePrefabs;
     [SerializeField] private GameObject _fruitPrefab;
 
@@ -11,22 +13,46 @@ public class ObstacleSpawner : MonoBehaviour
 
     private float _fruitTimer;
 
+    private CameraZoom _cameraZoom;
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        _cameraZoom = Camera.main.gameObject.GetComponent<CameraZoom>();
+    }
 
     private void Update()
     {
+        if (!GameManager.Instance.IsPlaying)
+            return;
+
+        transform.position = new Vector3(_cameraZoom.Screenbounds.x + 10, transform.position.y, transform.position.z);
+
         _spawnTimer -= Time.deltaTime;
         _fruitTimer -= Time.deltaTime;
 
         if (_spawnTimer <= 0)
         {
             SpawnObstacle();
-            _spawnTimer = Random.Range(0.6f, 1.5f);
+            _spawnTimer = Random.Range(0.8f, 2f);
         }
 
         if (_fruitTimer <= 0)
         {
             SpawnFruit();
-            _fruitTimer = Random.Range(2f, 6f);
+            _fruitTimer = Random.Range(2f, 4f);
         }
     }
 
@@ -42,6 +68,11 @@ public class ObstacleSpawner : MonoBehaviour
         float yPos = Random.Range(-4f, 4f);
 
         Instantiate(_fruitPrefab, new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z), Quaternion.identity);
+    }
+
+    public void UpdateObstaclesToSpawn()
+    {
+        _obstaclePrefabs = GameManager.Instance.CurrentStateStats.obstaclesToSpawn;
     }
 
 }

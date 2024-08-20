@@ -5,6 +5,7 @@ using UnityEngine;
 public class Fruit : MonoBehaviour
 {
     private CameraZoom _cameraZoom;
+    private float _moveSpeed = 5f;
 
     private void Start()
     {
@@ -13,7 +14,10 @@ public class Fruit : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector2.left * 7f * Time.deltaTime);
+        if (!GameManager.Instance.IsPlaying)
+            return;
+
+        transform.Translate(Vector2.left * _moveSpeed * GameManager.Instance.CurrentStateIndex * Time.deltaTime);
 
         if (transform.position.x <= _cameraZoom.Screenbounds.x * -1 - 5)
         {
