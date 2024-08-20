@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextState()
     {
+        if (_stateIndex >= 3)
+            return;
+
         _stateIndex++;
         switch (_stateIndex)
         {
@@ -57,6 +60,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
         ObstacleSpawner.Instance.UpdateObstaclesToSpawn();
+        BackgroundManager.Instance.ChangeStateBackground();
     }
 
     public void StartGame()

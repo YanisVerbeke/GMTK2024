@@ -7,7 +7,7 @@ public class ObstacleSpawner : MonoBehaviour
     public static ObstacleSpawner Instance { get; private set; }
 
     [SerializeField] private List<GameObject> _obstaclePrefabs;
-    [SerializeField] private GameObject _fruitPrefab;
+    [SerializeField] private List<GameObject> _fruitPrefabs;
 
     private float _spawnTimer;
 
@@ -46,7 +46,7 @@ public class ObstacleSpawner : MonoBehaviour
         if (_spawnTimer <= 0)
         {
             SpawnObstacle();
-            _spawnTimer = Random.Range(0.8f, 2f);
+            _spawnTimer = Random.Range(0.6f, 1.6f);
         }
 
         if (_fruitTimer <= 0)
@@ -67,7 +67,7 @@ public class ObstacleSpawner : MonoBehaviour
     {
         float yPos = Random.Range(-4f, 4f);
 
-        Instantiate(_fruitPrefab, new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z), Quaternion.identity);
+        Instantiate(_fruitPrefabs[Random.Range(0, _fruitPrefabs.Count)], new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z), Quaternion.identity);
     }
 
     public void UpdateObstaclesToSpawn()

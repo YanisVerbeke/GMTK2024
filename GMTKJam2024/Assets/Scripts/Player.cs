@@ -44,7 +44,10 @@ public class Player : MonoBehaviour
     {
         if (transform.position.y <= _screenBounds.y * -1 - 5)
         {
-            //GameManager.Instance.GameOver();
+            if (GameManager.Instance.IsPlaying)
+            {
+                GameManager.Instance.GameOver();
+            }
             Destroy(gameObject);
         }
 
@@ -177,6 +180,7 @@ public class Player : MonoBehaviour
 
                     if (_lives <= 0)
                     {
+                        _collider.isTrigger = true;
                         GameManager.Instance.GameOver();
                     }
                 }
