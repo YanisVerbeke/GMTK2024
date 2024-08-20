@@ -14,10 +14,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> _state2Obstacles;
     [SerializeField] private List<GameObject> _state3Obstacles;
 
+    [SerializeField] private GameObject _gameOverScreen;
+    [SerializeField] private GameObject _winScreen;
+
     public StateStats CurrentStateStats { get { return _currentStateStats; } }
     public int CurrentStateIndex { get { return _stateIndex; } }
 
     public bool IsPlaying { get; private set; }
+
+    private float _winTimer = 6f;
 
     private void Awake()
     {
@@ -29,13 +34,25 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
         StartGame();
-        GoToNextState();
+
+    }
+
+    private void Update()
+    {
+        if (CurrentStateIndex >= 4)
+        {
+            _winTimer -= Time.deltaTime;
+
+            if (_winTimer <= 0)
+            {
+                DisplayWinScreen();
+            }
+        }
     }
 
 
@@ -51,7 +68,7 @@ public class GameManager : MonoBehaviour
                 _currentStateStats = new StateStats(8, _state1Obstacles, "OnMid", 10, 7);
                 break;
             case 2:
-                _currentStateStats = new StateStats(19, _state2Obstacles, "OnBig", 30, 10);
+                _currentStateStats = new StateStats(18, _state2Obstacles, "OnBig", 30, 10);
                 break;
             case 3:
                 _currentStateStats = new StateStats(32, _state3Obstacles, "OnGiant", 50, 14);
@@ -68,11 +85,16 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        _gameOverScreen.SetActive(false);
+        _winScreen.SetActive(false);
+        _stateIndex = 0;
+        GoToNextState();
         IsPlaying = true;
     }
 
     public void GameOver()
     {
+        DisplayGameOverScreen();
         IsPlaying = false;
     }
 
@@ -81,5 +103,15 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainGameScene");
         StartGame();
+    }
+
+    public void DisplayGameOverScreen()
+    {
+        _gameOverScreen.SetActive(true);
+    }
+
+    public void DisplayWinScreen()
+    {
+        _winScreen.SetActive(true);
     }
 }
