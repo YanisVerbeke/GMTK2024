@@ -33,15 +33,6 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartShake();
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            StopShake();
-        }
-
         if (shakeDuration > 0 || _contineousShake)
         {
             camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount * GameManager.Instance.CurrentStateIndex;
