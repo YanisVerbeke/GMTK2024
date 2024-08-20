@@ -114,4 +114,9 @@ public class GameManager : MonoBehaviour
     {
         _winScreen.SetActive(true);
     }
+
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
 }
