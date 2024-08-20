@@ -24,6 +24,11 @@ public class Fruit : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (GameManager.Instance.CurrentStateIndex >= 4)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

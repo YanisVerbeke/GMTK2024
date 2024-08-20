@@ -26,6 +26,11 @@ public class Obstacle : MonoBehaviour
     private void Update()
     {
         Move();
+
+        if (GameManager.Instance.CurrentStateIndex >= 4)
+        {
+            IsDestroyedByCollision(10000000);
+        }
     }
 
     private void FixedUpdate()
