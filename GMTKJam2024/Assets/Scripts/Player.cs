@@ -132,7 +132,10 @@ public class Player : MonoBehaviour
         _size++;
         if (_size == GameManager.Instance.CurrentStateStats.sizeToNextState)
         {
-            _animator.SetTrigger(GameManager.Instance.CurrentStateStats.nextAnimationName);
+            if (GameManager.Instance.CurrentStateIndex < 3)
+            {
+                _animator.SetTrigger(GameManager.Instance.CurrentStateStats.nextAnimationName);
+            }
             Camera.main.gameObject.GetComponent<CameraShake>().StartShake();
         }
     }
@@ -149,6 +152,10 @@ public class Player : MonoBehaviour
         UiManager.Instance.DisplayLives(_lives);
         Camera.main.gameObject.GetComponent<CameraShake>().StopShake();
         GameManager.Instance.GoToNextState();
+        if (GameManager.Instance.CurrentStateIndex >= 4)
+        {
+            _animator.SetTrigger("OnGiant");
+        }
     }
 
     private void ChangeColor()

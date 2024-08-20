@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UiManager : MonoBehaviour
 {
@@ -34,6 +35,14 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    public void PlayButtonClick()
+    {
+        SceneManager.LoadScene("MainGameScene");
+    }
 
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
 
 }
