@@ -41,20 +41,23 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextState()
     {
-        if (_stateIndex >= 3)
+        if (_stateIndex >= 4)
             return;
 
         _stateIndex++;
         switch (_stateIndex)
         {
             case 1:
-                _currentStateStats = new StateStats(7, _state1Obstacles, "OnMid", 10, 7);
+                _currentStateStats = new StateStats(8, _state1Obstacles, "OnMid", 10, 7);
                 break;
             case 2:
-                _currentStateStats = new StateStats(20, _state2Obstacles, "OnBig", 30, 15);
+                _currentStateStats = new StateStats(19, _state2Obstacles, "OnBig", 30, 10);
                 break;
             case 3:
-                _currentStateStats = new StateStats(30, _state3Obstacles, "OnGiant", 50, 23);
+                _currentStateStats = new StateStats(32, _state3Obstacles, "OnGiant", 50, 14);
+                break;
+            case 4:
+                _currentStateStats = new StateStats(1000000, _state3Obstacles, "", 0, 0);
                 break;
             default:
                 break;

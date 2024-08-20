@@ -54,16 +54,26 @@ public class Player : MonoBehaviour
         if (!GameManager.Instance.IsPlaying)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if (GameManager.Instance.CurrentStateIndex < 4)
         {
-            Jump();
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                Jump();
+            }
+
+            _xInput = Input.GetAxis("Horizontal");
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                Grow();
+            }
         }
-
-        _xInput = Input.GetAxis("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.U))
+        else
         {
-            Grow();
+            _xInput = 0f;
+            transform.Rotate(new Vector3(0, 0, 0.1f));
+            _rigidbody.gravityScale = 0;
+            _rigidbody.velocity = Vector2.zero;
         }
 
         if (_cooldownTimer >= 0)
@@ -85,8 +95,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.velocity = new Vector2(_xInput * 8f, _rigidbody.velocity.y);
-        transform.rotation = Quaternion.Euler(0, 0, _rigidbody.velocity.y);
+        if (GameManager.Instance.CurrentStateIndex < 4)
+        {
+            _rigidbody.velocity = new Vector2(_xInput * 8f, _rigidbody.velocity.y);
+            transform.rotation = Quaternion.Euler(0, 0, _rigidbody.velocity.y);
+        }
     }
 
     private void LateUpdate()
@@ -113,7 +126,7 @@ public class Player : MonoBehaviour
 
     private void Grow()
     {
-        transform.localScale += Vector3.one * 0.5f;
+        transform.localScale += Vector3.one * 0.5f * GameManager.Instance.CurrentStateIndex;
         _rigidbody.mass += 0.1f;
         _jumpForce += 2;
         _size++;
@@ -128,7 +141,7 @@ public class Player : MonoBehaviour
     {
         _cameraZoom.ZoomOut(GameManager.Instance.CurrentStateStats.nextZoomOutAmount);
         _obstaclesDestroyed = 0;
-        _cooldownTimer = 3f;
+        _cooldownTimer = 4f;
         if (_lives < 3)
         {
             _lives++;
@@ -176,7 +189,7 @@ public class Player : MonoBehaviour
 
                     _lives--;
                     UiManager.Instance.DisplayLives(_lives);
-                    _cooldownTimer = 3f;
+                    _cooldownTimer = 4f;
 
                     if (_lives <= 0)
                     {

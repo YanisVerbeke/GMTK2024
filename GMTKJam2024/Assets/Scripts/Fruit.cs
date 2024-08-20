@@ -10,6 +10,7 @@ public class Fruit : MonoBehaviour
     private void Start()
     {
         _cameraZoom = Camera.main.gameObject.GetComponent<CameraZoom>();
+        transform.localScale = Vector3.one * Camera.main.orthographicSize / 5;
     }
 
     private void Update()

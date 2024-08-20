@@ -36,23 +36,6 @@ public class BackgroundManager : MonoBehaviour
 
     private void Update()
     {
-        switch (GameManager.Instance.CurrentStateIndex)
-        {
-            // VAS Y NIQUE
-            case 1:
-                _targetPosition = Vector3.left * 0;
-                break;
-            case 2:
-                _targetPosition = Vector3.left * 120;
-                break;
-            case 3:
-                _targetPosition = Vector3.left * 720;
-                break;
-            default:
-                break;
-        }
-
-
         if (Vector3.Distance(transform.position, _targetPosition) > 0.05f)
         {
             float xPos = Mathf.SmoothDamp(transform.position.x, _targetPosition.x, ref _velocity, _smoothTime);
@@ -74,6 +57,25 @@ public class BackgroundManager : MonoBehaviour
     {
         switch (GameManager.Instance.CurrentStateIndex)
         {
+            // VAS Y NIQUE
+            case 1:
+                _targetPosition = Vector3.left * 0;
+                break;
+            case 2:
+                _targetPosition = Vector3.left * 120;
+                break;
+            case 3:
+                _targetPosition = Vector3.left * 720;
+                break;
+            case 4:
+                _targetPosition = Vector3.left * 2280;
+                break;
+            default:
+                break;
+        }
+
+        /*switch (GameManager.Instance.CurrentStateIndex)
+        {
             case 1:
                 _targetPosition = -_state1bg.position;
                 break;
@@ -85,7 +87,7 @@ public class BackgroundManager : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
 
     }
 

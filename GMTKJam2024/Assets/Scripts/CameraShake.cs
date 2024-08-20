@@ -44,7 +44,7 @@ public class CameraShake : MonoBehaviour
 
         if (shakeDuration > 0 || _contineousShake)
         {
-            camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount * GameManager.Instance.CurrentStateIndex;
 
             shakeDuration -= Time.deltaTime * decreaseFactor;
         }

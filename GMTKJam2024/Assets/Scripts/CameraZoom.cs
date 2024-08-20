@@ -22,6 +22,12 @@ public class CameraZoom : MonoBehaviour
         _screenbounds = new Vector2(_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
     }
 
+    private void Start()
+    {
+        _camera.orthographicSize = 5;
+        BackgroundManager.Instance.SetBackgroundScale(_camera.orthographicSize);
+    }
+
     private void Update()
     {
         if (_camera.orthographicSize != _targetSize)

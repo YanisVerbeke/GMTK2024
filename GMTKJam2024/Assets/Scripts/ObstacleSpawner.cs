@@ -35,7 +35,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.IsPlaying)
+        if (!GameManager.Instance.IsPlaying || GameManager.Instance.CurrentStateIndex >= 4)
             return;
 
         transform.position = new Vector3(_cameraZoom.Screenbounds.x + 10, transform.position.y, transform.position.z);
@@ -58,9 +58,12 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void SpawnObstacle()
     {
-        float yPos = Random.Range(-1.2f, 1.6f);
+        float yPos = Random.Range(-1.2f - Mathf.Pow(GameManager.Instance.CurrentStateIndex - 1, 4), 1.6f + Mathf.Pow(GameManager.Instance.CurrentStateIndex - 1, 4));
 
-        Instantiate(_obstaclePrefabs[Random.Range(0, _obstaclePrefabs.Count)], new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z), Quaternion.identity);
+        if (_obstaclePrefabs.Count > 0)
+        {
+            Instantiate(_obstaclePrefabs[Random.Range(0, _obstaclePrefabs.Count)], new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z), Quaternion.identity);
+        }
     }
 
     private void SpawnFruit()
